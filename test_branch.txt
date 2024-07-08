@@ -1,6 +1,0 @@
-just for demonstrate the branching feacher in github
-<<<<<<< HEAD
-this line is being created using the main branch of my local server
-=======
-i have added one more line
->>>>>>> 93de10239cfb0e9c1567ed7a7aa5cc67bd6bc32a
