@@ -5,9 +5,9 @@ import axios from 'axios'
 import { useNavigate, useParams } from 'react-router-dom'
 import { useSnackbar } from 'notistack';
 
-const EditBook = () => {
-  const[title,setTitle] = useState("")
-  const[author,setAuthor] = useState("")
+const EditCar = () => {
+  const[model,setModel] = useState("")
+  const[brand,setBrand] = useState("")
   const[publishYear,setPublishYear] = useState('')
   const[loading,setLoading] = useState(false)
   const navigate = useNavigate()
@@ -17,11 +17,11 @@ const EditBook = () => {
   useEffect(()=>{
     setLoading(true)
     axios
-      .get(`http://localhost:5555/books/${id}`)
+      .get(`http://localhost:5555/cars/${id}`)
       .then((response)=>{
-        setAuthor(response.data.author)
+        setModel(response.data.model)
         setPublishYear(response.data.publishYear)
-        setTitle(response.data.title)
+        setBrand(response.data.brand)
         setLoading(false);
       })
       .catch((error)=>{
@@ -32,15 +32,15 @@ const EditBook = () => {
      
   },[])
 
-  const handleEditBook= ()=>{
+  const handleEditCar= ()=>{
     const data = {
-      title,
-      author,
+      model,
+      brand,
       publishYear,
     }
     setLoading(true);
     axios
-      .put(`http://localhost:5555/books/${id}`,data)
+      .put(`http://localhost:5555/cars/${id}`,data)
       .then(()=>{
         setLoading(false)
         enqueueSnackbar('Book Edited successfully', { variant: 'success' });
@@ -62,7 +62,7 @@ const EditBook = () => {
           <label className='text-xl mr-4 text-gray-500'>Title</label>
           <input
             type='text'
-            value={title}
+            value={model}
             onChange={(e) => setTitle(e.target.value)}
             className='border-2 border-gray-500 px-4 py-2  w-full '
           />
@@ -71,7 +71,7 @@ const EditBook = () => {
           <label className='text-xl mr-4 text-gray-500'>Author</label>
           <input
             type='text'
-            value={author}
+            value={brand}
             onChange={(e) => setAuthor(e.target.value)}
             className='border-2 border-gray-500 px-4 py-2  w-full '
           />
@@ -86,10 +86,10 @@ const EditBook = () => {
           />
         </div>
       </div>
-      <button className='p-2 bg-sky-300 m-8' onClick={handleEditBook}>Save</button>
+      <button className='p-2 bg-sky-300 m-8' onClick={handleEditCar}>Save</button>
       
     </div>
   )
 }
 
-export default EditBook
+export default EditCar

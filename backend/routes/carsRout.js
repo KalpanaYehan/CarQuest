@@ -1,23 +1,23 @@
 import express from 'express'
-import{Book} from '../models/basicModel.js'
+import{Car} from '../models/basicModel.js'
 
 const router = express.Router()//use without app
 
 router.post('/',async(req,res)=>{
     try{
-        if(!req.body.title||
-            !req.body.author||
+        if(!req.body.model||
+            !req.body.brand||
             !req.body.publishYear
         ){
             return res.status(400).send({message:'send all required field',})
         }
-        const newBook ={
-            title: req.body.title,
-            author: req.body.author,
+        const newCar ={
+            model: req.body.model,
+            brand: req.body.brand,
             publishYear: req.body.publishYear,
         }
-        const book = await Book.create(newBook)
-        return res.status(210).send(book)
+        const car = await Car.create(newCar)
+        return res.status(210).send(car)
     
     }
     catch(error){
@@ -29,10 +29,10 @@ router.post('/',async(req,res)=>{
 
 router.get("/",async(req,res)=>{
     try{
-        const books = await Book.find({})
+        const cars = await Car.find({})
         return res.status(200).json({
-            count:books.length,
-            data:books
+            count:cars.length,
+            data:cars
         });
     }
     catch(error){
@@ -44,8 +44,8 @@ router.get("/",async(req,res)=>{
 router.get("/:id",async(req,res)=>{
     try{
         const{id} =req.params
-        const book = await Book.findById(id)
-        return res.status(200).json(book);
+        const car = await Car.findById(id)
+        return res.status(200).json(car);
 
         
     }
@@ -57,15 +57,15 @@ router.get("/:id",async(req,res)=>{
 
 router.put("/:id",async(req,res)=>{
     try{
-        if(!req.body.title||
-            !req.body.author||
+        if(!req.body.model||
+            !req.body.brand||
             !req.body.publishYear
         ){
             return res.status(400).send({message:'send all required field',})
         }
        
         const{id}=req.params
-        const result = await Book.findByIdAndUpdate(id,req.body)
+        const result = await Car.findByIdAndUpdate(id,req.body)
         if(!result){
             res.status(404).send({message:"Book not found"})
         }
@@ -81,7 +81,7 @@ router.put("/:id",async(req,res)=>{
 router.delete("/:id",async(req,res)=>{
     try{
         const {id}=req.params;
-        const result = await Book.findByIdAndDelete(id)
+        const result = await Car.findByIdAndDelete(id)
         
 
         if(!result){

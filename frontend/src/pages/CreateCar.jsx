@@ -5,9 +5,9 @@ import axios from 'axios'
 import { useNavigate } from 'react-router-dom'
 import {useSnackbar} from 'notistack'
 
-const CreateBook = () => {
-  const[title,setTitle] = useState("")
-  const[author,setAuthor] = useState("")
+const CreateCar = () => {
+  const[model,setTitle] = useState("")
+  const[brand,setAuthor] = useState("")
   const[publishYear,setPublishYear] = useState('')
   const[loading,setLoading] = useState(false)
   const navigate = useNavigate()
@@ -15,13 +15,13 @@ const CreateBook = () => {
 
   const handleSaveBook= ()=>{
     const data = {
-      title,
-      author,
+      model,
+      brand,
       publishYear,
     }
     setLoading(true);
     axios
-      .post('http://localhost:5555/books',data)
+      .post('http://localhost:5555/cars',data)
       .then(()=>{
         setLoading(false)
         enqueueSnackbar('Book Created successfully', { variant: 'success' })
@@ -42,7 +42,7 @@ const CreateBook = () => {
           <label className='text-xl mr-4 text-gray-500'>Title</label>
           <input
             type='text'
-            value={title}
+            value={model}
             onChange={(e) => setTitle(e.target.value)}
             className='border-2 border-gray-500 px-4 py-2  w-full '
           />
@@ -51,7 +51,7 @@ const CreateBook = () => {
           <label className='text-xl mr-4 text-gray-500'>Author</label>
           <input
             type='text'
-            value={author}
+            value={brand}
             onChange={(e) => setAuthor(e.target.value)}
             className='border-2 border-gray-500 px-4 py-2  w-full '
           />
@@ -72,4 +72,4 @@ const CreateBook = () => {
   )
 }
 
-export default CreateBook
+export default CreateCar

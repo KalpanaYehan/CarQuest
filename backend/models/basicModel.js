@@ -1,12 +1,12 @@
 import mongoose from "mongoose";
 
-const bookSchema= mongoose.Schema(
-    {
-        title:{
+const carSchema= mongoose.Schema(
+    {   
+        model:{
             type:String,
             require:true,
         },
-        author:{
+        brand:{
             type:String,
             require:true,
         },
@@ -14,10 +14,11 @@ const bookSchema= mongoose.Schema(
             type:Number,
             require:true
         },
+    
     },
     {
         Timestamps:true,
     }
 );
 
-export const Book = mongoose.model("cat",bookSchema)
+export const Car = mongoose.model("car",carSchema)

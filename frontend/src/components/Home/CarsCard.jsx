@@ -5,17 +5,17 @@ import { AiOutlineEdit } from 'react-icons/ai';
 import { BsInfoCircle } from 'react-icons/bs';
 import { MdOutlineDelete } from 'react-icons/md';
 import { useState } from 'react';
-import BookSingleCard from './BookSingleCard';
+import CarSingleCard from './CarSingleCard';
 
-const BooksCard = ({books}) => {
+const CarsCard = ({cars}) => {
   return (
     <div className='grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4'>
-        {books.map((book)=>(
-            <BookSingleCard key={book._id} book={book}/>
+        {cars.map((car)=>(
+            <CarSingleCard key={car._id} car={car}/>
         )
              
         )}
         </div>
   )
 }
-export default BooksCard
+export default CarsCard

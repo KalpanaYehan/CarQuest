@@ -1,8 +1,8 @@
 import express, { response } from "express";
 import { PORT,mongoDBURL } from "./config.js";
 import mongoose from "mongoose";
-import { Book } from "./models/basicModel.js";
-import booksRout from "./routes/booksRout.js"
+import { Car } from "./models/basicModel.js";
+import carsRout from "./routes/carsRout.js"
 import cors from 'cors'
 
 const app = express()
@@ -21,7 +21,7 @@ app.get("/",(req,res)=>{
     return res.status(234).send('Welcome To Book Store')
 })
 
-app.use("/books",booksRout);//wen request with '/books' then use this middleware(booksrout)
+app.use("/cars",carsRout);//wen request with '/books' then use this middleware(booksrout)
 
 
 
