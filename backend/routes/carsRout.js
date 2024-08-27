@@ -33,7 +33,9 @@ router.get("/",async(req,res)=>{
         return res.status(200).json({
             count:cars.length,
             data:cars
-        });
+            
+        })
+        
     }
     catch(error){
         console.log(error.message);

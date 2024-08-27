@@ -34,12 +34,12 @@ const ShowCar = () => {
             </div>
 
             <div className='my-4'>
-            <span className='text-xl mr-4 text-gray-500'>Title</span>
+            <span className='text-xl mr-4 text-gray-500'>Model</span>
             <span>{car.model}</span>
             </div>
 
             <div className='my-4'>
-              <span className='text-xl mr-4 text-gray-500'>Author</span>
+              <span className='text-xl mr-4 text-gray-500'>Brand</span>
               <span>{car.brand}</span>
             </div>
 

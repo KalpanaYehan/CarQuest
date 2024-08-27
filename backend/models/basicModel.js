@@ -17,7 +17,7 @@ const carSchema= mongoose.Schema(
     
     },
     {
-        Timestamps:true,
+        timestamps:true,
     }
 );
 

@@ -55,11 +55,11 @@ const EditCar = () => {
   return (
     <div className='p-4'>
       <BackButton />
-      <h1 className='text-3xl my-4'>Edit Book</h1>
+      <h1 className='text-3xl my-4'>Edit Car</h1>
       {loading ? (<Spinner/>) :''}
       <div>
         <div className='my-4'>
-          <label className='text-xl mr-4 text-gray-500'>Title</label>
+          <label className='text-xl mr-4 text-gray-500'>Model</label>
           <input
             type='text'
             value={model}
@@ -68,7 +68,7 @@ const EditCar = () => {
           />
         </div>
         <div className='my-4'>
-          <label className='text-xl mr-4 text-gray-500'>Author</label>
+          <label className='text-xl mr-4 text-gray-500'>Brand</label>
           <input
             type='text'
             value={brand}
