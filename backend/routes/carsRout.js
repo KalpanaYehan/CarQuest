@@ -7,7 +7,13 @@ router.post('/',async(req,res)=>{
     try{
         if(!req.body.model||
             !req.body.brand||
-            !req.body.publishYear
+            !req.body.publishYear||
+            !req.body.price||
+            !req.body.mileage||
+            !req.body.fuelType||
+            !req.body.condition||
+            !req.body.description
+
         ){
             return res.status(400).send({message:'send all required field',})
         }
@@ -15,6 +21,11 @@ router.post('/',async(req,res)=>{
             model: req.body.model,
             brand: req.body.brand,
             publishYear: req.body.publishYear,
+            price: req.body.price,
+            mileage: req.body.mileage,
+            fuelType: req.body.fuelType,
+            condition:req.body.condition,
+            description:req.body.description
         }
         const car = await Car.create(newCar)
         return res.status(210).send(car)
@@ -61,7 +72,13 @@ router.put("/:id",async(req,res)=>{
     try{
         if(!req.body.model||
             !req.body.brand||
-            !req.body.publishYear
+            !req.body.publishYear||
+            !req.body.price||
+            !req.body.mileage||
+            !req.body.fuelType||
+            !req.body.condition||
+            !req.body.description
+
         ){
             return res.status(400).send({message:'send all required field',})
         }

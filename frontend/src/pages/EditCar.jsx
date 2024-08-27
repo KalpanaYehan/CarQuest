@@ -9,6 +9,11 @@ const EditCar = () => {
   const[model,setModel] = useState("")
   const[brand,setBrand] = useState("")
   const[publishYear,setPublishYear] = useState('')
+  const[price,setPrice] = useState("")
+  const[mileage,setMileage] = useState("")
+  const[fuelType,setFuelType] = useState('')
+  const[condition,setCondition] = useState("")
+  const[description,setDescription] = useState("")
   const[loading,setLoading] = useState(false)
   const navigate = useNavigate()
   const {id} =useParams()
@@ -22,6 +27,11 @@ const EditCar = () => {
         setModel(response.data.model)
         setPublishYear(response.data.publishYear)
         setBrand(response.data.brand)
+        setPrice(response.data.price)
+        setMileage(response.data.mileage)
+        setFuelType(response.data.fuelType)
+        setCondition(response.data.condition)
+        setDescription(response.data.description)
         setLoading(false);
       })
       .catch((error)=>{
@@ -37,6 +47,11 @@ const EditCar = () => {
       model,
       brand,
       publishYear,
+      price,
+      mileage,
+      fuelType,
+      condition,
+      description
     }
     setLoading(true);
     axios
@@ -63,7 +78,7 @@ const EditCar = () => {
           <input
             type='text'
             value={model}
-            onChange={(e) => setTitle(e.target.value)}
+            onChange={(e) => setModel(e.target.value)}
             className='border-2 border-gray-500 px-4 py-2  w-full '
           />
         </div>
@@ -72,7 +87,7 @@ const EditCar = () => {
           <input
             type='text'
             value={brand}
-            onChange={(e) => setAuthor(e.target.value)}
+            onChange={(e) => setBrand(e.target.value)}
             className='border-2 border-gray-500 px-4 py-2  w-full '
           />
         </div>
@@ -82,6 +97,51 @@ const EditCar = () => {
             type='number'
             value={publishYear}
             onChange={(e) => setPublishYear(e.target.value)}
+            className='border-2 border-gray-500 px-4 py-2  w-full '
+          />
+        </div>
+        <div className='my-4'>
+          <label className='text-xl mr-4 text-gray-500'>Price</label>
+          <input
+            type='text'
+            value={price}
+            onChange={(e) => setPrice(e.target.value)}
+            className='border-2 border-gray-500 px-4 py-2  w-full '
+          />
+        </div>
+        <div className='my-4'>
+          <label className='text-xl mr-4 text-gray-500'>Mileage</label>
+          <input
+            type='text'
+            value={mileage}
+            onChange={(e) => setMileage(e.target.value)}
+            className='border-2 border-gray-500 px-4 py-2  w-full '
+          />
+        </div>
+        <div className='my-4'>
+          <label className='text-xl mr-4 text-gray-500'>FuelType</label>
+          <input
+            type='text'
+            value={fuelType}
+            onChange={(e) => setFuelType(e.target.value)}
+            className='border-2 border-gray-500 px-4 py-2  w-full '
+          />
+        </div>
+        <div className='my-4'>
+          <label className='text-xl mr-4 text-gray-500'>Condition</label>
+          <input
+            type='text'
+            value={condition}
+            onChange={(e) => setCondition(e.target.value)}
+            className='border-2 border-gray-500 px-4 py-2  w-full '
+          />
+        </div>
+        <div className='my-4'>
+          <label className='text-xl mr-4 text-gray-500'>Description</label>
+          <input
+            type='text'
+            value={description}
+            onChange={(e) => setDescription(e.target.value)}
             className='border-2 border-gray-500 px-4 py-2  w-full '
           />
         </div>

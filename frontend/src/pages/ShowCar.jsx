@@ -49,6 +49,31 @@ const ShowCar = () => {
             </div>
 
             <div className='my-4'>
+              <span className='text-xl mr-4 text-gray-500'>Price</span>
+              <span>{car.price}</span>
+            </div>
+
+            <div className='my-4'>
+              <span className='text-xl mr-4 text-gray-500'>Mileage</span>
+              <span>{car.mileage}</span>
+            </div>
+
+            <div className='my-4'>
+              <span className='text-xl mr-4 text-gray-500'>FuelType</span>
+              <span>{car.fuelType}</span>
+            </div>
+
+            <div className='my-4'>
+              <span className='text-xl mr-4 text-gray-500'>Condition</span>
+              <span>{car.condition}</span>
+            </div>
+
+            <div className='my-4'>
+              <span className='text-xl mr-4 text-gray-500'>Description</span>
+              <span>{car.description}</span>
+            </div>
+
+            <div className='my-4'>
               <span className='text-xl mr-4 text-gray-500'>Create Time</span>
               <span>{new Date(car.createdAt).toString()}</span>
             </div>
