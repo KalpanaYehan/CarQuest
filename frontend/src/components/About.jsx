@@ -19,7 +19,7 @@ const About = () => {
         </div>
 
         <div className="flex-1 max-w-lg ">
-          <p className="text-lg leading-relaxed">
+          <p className="text-lg leading-relaxed text-justify">
           At CarQuest, we are dedicated to revolutionizing the car buying and selling experience. 
           Our mission is to provide a seamless, transparent, and customer-centric platform that 
           caters to all your automotive needs. With a commitment to offering only genuine, high-quality 

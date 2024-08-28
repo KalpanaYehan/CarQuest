@@ -8,24 +8,29 @@ import { MdOutlineAddBox, MdOutlineDelete } from 'react-icons/md';
 import CarsTable from '../components/Home/CarsTable'
 import CarsCard from '../components/Home/CarsCard'
 const CarList = () => {
-  const[cars,setCar] = useState([])
-  const[loading,setLoading] = useState(false)
-  const[showType,setShowType]=useState('table')
+    const[cars,setCar] = useState([])
+    const[loading,setLoading] = useState(false)
+    const[showType,setShowType]=useState('table')
+    axios.defaults.withCredentials = true
+    useEffect(()=>{
+        setLoading(true)
+        axios
+            .get('http://localhost:5555/cars')
+            .then((response)=>{
+                if(response.data.message !== "success") {
+                    navigate('/login');
+                }else{
+                    setCar(response.data.data)
+                    setLoading(false)
+                }
+            })
+            .catch((error)=>{
+                console.log(error)
+                setLoading(false)
+                navigate('/login')
+            })
 
-  useEffect(()=>{
-    setLoading(true)
-    axios
-        .get('http://localhost:5555/cars')
-        .then((response)=>{
-            setCar(response.data.data);
-            setLoading(false)
-        })
-        .catch((error)=>{
-            console.log(error);
-            setLoading(false)
-        })
-
-  },[])
+    },[])
 
   return (
     <div className='p-4'>

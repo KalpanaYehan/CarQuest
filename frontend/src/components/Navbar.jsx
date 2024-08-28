@@ -7,15 +7,15 @@ const Navbar = () => {
       <div className="flex  justify-between py-3">
         <Link to="/" className="flex items-center mb-3 mb-md-0 me-md-auto text-gray-800 no-underline">
           
-          <span  className="text-4xl  text-yellow-500 pl-20 font-extrabold">CarQuest</span>
+          <span  className="text-4xl  text-yellow-500 pl-28 font-extrabold">CarQuest</span>
         </Link>
 
-        <ul className="flex gap-10 mr-15">
+        <ul className="flex gap-10 mr-36">
           <li className="cursor-pointer"><a href="#about" className="text-white  hover:text-orange-500 font-bold text-2xl">About</a></li>
           <li className="cursor-pointer"><a href="#service" className="text-white hover:text-orange-500 font-bold text-2xl">Services</a></li>
           <li className="cursor-pointer"><a href="#contact" className="text-white hover:text-orange-500 font-bold text-2xl">Contact</a></li>
 
-              <Link to='/cars/carlist'>
+              <Link to='/login'>
                 <button
                   className="bg-orange-500 text-white text-sm font-medium px-4 py-2 rounded-lg hover:bg-orange-600"
                   type="button"
@@ -24,7 +24,7 @@ const Navbar = () => {
                 </button>
               </Link>
 
-              <Link to='/login'>
+              <Link to='/signup'>
                 <button
                   className="bg-orange-500 text-white text-sm font-medium px-4 py-2 rounded-lg hover:bg-orange-600"
                   type="button"
