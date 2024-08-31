@@ -10,7 +10,7 @@ import CarsCard from '../components/Home/CarsCard'
 const CarList = () => {
     const[cars,setCar] = useState([])
     const[loading,setLoading] = useState(false)
-    const[showType,setShowType]=useState('table')
+    const[showType,setShowType]=useState('card')
     axios.defaults.withCredentials = true
     useEffect(()=>{
         setLoading(true)
@@ -33,12 +33,12 @@ const CarList = () => {
     },[])
 
   return (
-    <div className='p-4'>
-        <div className='flex justify-center items-center gap-x-4'>
-            <button className='bg-sky-300 hover:bg-sky-600 px-4 py-1 rounded-lg' onClick={() => setShowType('table')}>
+    <div className='p-4 bg-yellow-50'>
+        <div className='flex justify-center items-center gap-x-4 pt-5'>
+            <button className='bg-orange-500 hover:bg-orange-600 px-4 py-1 rounded-lg' onClick={() => setShowType('table')}>
                 Table
             </button>
-            <button className='bg-sky-300 hover:bg-sky-600 px-4 py-1 rounded-lg' onClick={() => setShowType('card')}>
+            <button className='bg-orange-500 hover:bg-orange-600 px-4 py-1 rounded-lg' onClick={() => setShowType('card')}>
                 Card
             </button>
         </div>

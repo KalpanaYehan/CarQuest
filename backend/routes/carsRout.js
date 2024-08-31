@@ -10,7 +10,7 @@ router.post('/',async(req,res)=>{
             !req.body.publishYear||
             !req.body.price||
             !req.body.mileage||
-            !req.body.fuelType||
+            !req.body.img||
             !req.body.condition||
             !req.body.description
 
@@ -23,7 +23,7 @@ router.post('/',async(req,res)=>{
             publishYear: req.body.publishYear,
             price: req.body.price,
             mileage: req.body.mileage,
-            fuelType: req.body.fuelType,
+            img: req.body.img,
             condition:req.body.condition,
             description:req.body.description
         }
@@ -75,7 +75,7 @@ router.put("/:id",async(req,res)=>{
             !req.body.publishYear||
             !req.body.price||
             !req.body.mileage||
-            !req.body.fuelType||
+            !req.body.img||
             !req.body.condition||
             !req.body.description
 

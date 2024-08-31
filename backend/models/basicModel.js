@@ -22,7 +22,7 @@ const carSchema= mongoose.Schema(
             type:Number,
             require:true
         },
-        fuelType:{
+        img:{
             type:String,
             require:true
         },

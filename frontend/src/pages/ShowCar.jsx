@@ -1,93 +1,86 @@
-import React,{useEffect,useState} from 'react'
-import axios from 'axios'
-import { useParams } from 'react-router-dom'
-import BackButton from '../components/BackButton'
-import Spinner from '../components/Spinner'
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import { useParams } from 'react-router-dom';
+import BackButton from '../components/BackButton';
+import Spinner from '../components/Spinner';
 
 const ShowCar = () => {
-  const[car,setCar] = useState([])
-  const[loading,setLoading]=useState(false)
-  const{id} = useParams();
+  const [car, setCar] = useState({});
+  const [loading, setLoading] = useState(false);
+  const { id } = useParams();
 
-  useEffect(()=>{
-    setLoading(true)
+  useEffect(() => {
+    setLoading(true);
     axios
       .get(`http://localhost:5555/cars/${id}`)
-      .then((response)=>{
-        setCar(response.data)
-        setLoading(false)
+      .then((response) => {
+        setCar(response.data);
+        setLoading(false);
       })
-      .catch((error)=>{
-        console.log(error)
-        setLoading(false)
-      })
-  },[])
+      .catch((error) => {
+        console.log(error);
+        setLoading(false);
+      });
+  }, [id]);
+
   return (
-    <div className='p-4'>
-      <BackButton/>
-      <h1 className='text-3xl my-4'>Details</h1>
-      {loading?(<Spinner/>):(
-          <div className='flex flex-col border-2 border-sky-400 rounded-xl w-fit p-4'>
-            <div className='my-4'>
-              <span className='text-xl mr-4 text-gray-500'>Id</span>
-              <span>{car._id}</span>
+    <div className='p-6 bg-orange-50 min-h-screen'>
+      <BackButton />
+      <h1 className='text-4xl font-bold text-yellow-600 my-6 text-center'>Car Details</h1>
+      {loading ? (
+        <Spinner />
+      ) : (
+        <div className='max-w-3xl mx-auto bg-white shadow-lg rounded-lg p-6'>
+          <div className='space-y-4'>
+            <div className='flex justify-between'>
+              <span className='text-lg font-semibold text-gray-700'>ID:</span>
+              <span className='text-lg text-gray-900'>{car._id}</span>
             </div>
-
-            <div className='my-4'>
-            <span className='text-xl mr-4 text-gray-500'>Model</span>
-            <span>{car.model}</span>
+            <div className='flex justify-between'>
+              <span className='text-lg font-semibold text-gray-700'>Model:</span>
+              <span className='text-lg text-gray-900'>{car.model}</span>
             </div>
-
-            <div className='my-4'>
-              <span className='text-xl mr-4 text-gray-500'>Brand</span>
-              <span>{car.brand}</span>
+            <div className='flex justify-between'>
+              <span className='text-lg font-semibold text-gray-700'>Brand:</span>
+              <span className='text-lg text-gray-900'>{car.brand}</span>
             </div>
-
-            <div className='my-4'>
-              <span className='text-xl mr-4 text-gray-500'>Publish Year</span>
-              <span>{car.publishYear}</span>
+            <div className='flex justify-between'>
+              <span className='text-lg font-semibold text-gray-700'>Publish Year:</span>
+              <span className='text-lg text-gray-900'>{car.publishYear}</span>
             </div>
-
-            <div className='my-4'>
-              <span className='text-xl mr-4 text-gray-500'>Price</span>
-              <span>{car.price}</span>
+            <div className='flex justify-between'>
+              <span className='text-lg font-semibold text-gray-700'>Price:</span>
+              <span className='text-lg text-gray-900'>{car.price}</span>
             </div>
-
-            <div className='my-4'>
-              <span className='text-xl mr-4 text-gray-500'>Mileage</span>
-              <span>{car.mileage}</span>
+            <div className='flex justify-between'>
+              <span className='text-lg font-semibold text-gray-700'>Mileage:</span>
+              <span className='text-lg text-gray-900'>{car.mileage}</span>
             </div>
-
-            <div className='my-4'>
-              <span className='text-xl mr-4 text-gray-500'>FuelType</span>
-              <span>{car.fuelType}</span>
+            <div className='flex justify-between'>
+              <span className='text-lg font-semibold text-gray-700'>Image URL:</span>
+              <span className='text-lg text-gray-900'>{car.img}</span>
             </div>
-
-            <div className='my-4'>
-              <span className='text-xl mr-4 text-gray-500'>Condition</span>
-              <span>{car.condition}</span>
+            <div className='flex justify-between'>
+              <span className='text-lg font-semibold text-gray-700'>Condition:</span>
+              <span className='text-lg text-gray-900'>{car.condition}</span>
             </div>
-
-            <div className='my-4'>
-              <span className='text-xl mr-4 text-gray-500'>Description</span>
-              <span>{car.description}</span>
+            <div className='flex justify-between'>
+              <span className='text-lg font-semibold text-gray-700'>Description:</span>
+              <span className='text-lg text-gray-900'>{car.description}</span>
             </div>
-
-            <div className='my-4'>
-              <span className='text-xl mr-4 text-gray-500'>Create Time</span>
-              <span>{new Date(car.createdAt).toString()}</span>
+            <div className='flex justify-between'>
+              <span className='text-lg font-semibold text-gray-700'>Created At:</span>
+              <span className='text-lg text-gray-900'>{new Date(car.createdAt).toLocaleString()}</span>
             </div>
-
-            <div className='my-4'>
-              <span className='text-xl mr-4 text-gray-500'>Last Update Time</span>
-              <span>{new Date(car.updatedAt).toString()}</span>
+            <div className='flex justify-between'>
+              <span className='text-lg font-semibold text-gray-700'>Updated At:</span>
+              <span className='text-lg text-gray-900'>{new Date(car.updatedAt).toLocaleString()}</span>
             </div>
           </div>
-        )
-      }
-      
+        </div>
+      )}
     </div>
-  )
-}
+  );
+};
 
-export default ShowCar
+export default ShowCar;
