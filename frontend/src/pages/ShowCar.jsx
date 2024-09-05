@@ -57,16 +57,12 @@ const ShowCar = () => {
               <span className='text-lg text-gray-900'>{car.mileage}</span>
             </div>
             <div className='flex justify-between'>
-              <span className='text-lg font-semibold text-gray-700'>Image URL:</span>
-              <span className='text-lg text-gray-900'>{car.img}</span>
-            </div>
-            <div className='flex justify-between'>
               <span className='text-lg font-semibold text-gray-700'>Condition:</span>
               <span className='text-lg text-gray-900'>{car.condition}</span>
             </div>
-            <div className='flex justify-between'>
+            <div className='flex justify-center gap-16'>
               <span className='text-lg font-semibold text-gray-700'>Description:</span>
-              <span className='text-lg text-gray-900'>{car.description}</span>
+              <span className='text-lg text-gray-900 text-left'>{car.description}</span>
             </div>
             <div className='flex justify-between'>
               <span className='text-lg font-semibold text-gray-700'>Created At:</span>
@@ -75,6 +71,10 @@ const ShowCar = () => {
             <div className='flex justify-between'>
               <span className='text-lg font-semibold text-gray-700'>Updated At:</span>
               <span className='text-lg text-gray-900'>{new Date(car.updatedAt).toLocaleString()}</span>
+            </div>
+            <div className=''>
+              <div className='text-lg font-semibold text-gray-700'>Photo:</div>
+              <img src={car.img} className='w-full h-auto mt-2 rounded-lg'></img>
             </div>
           </div>
         </div>

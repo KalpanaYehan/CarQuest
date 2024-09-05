@@ -1,5 +1,6 @@
 import React from 'react'
 import{Routes,Route} from 'react-router-dom'
+import { AuthProvider } from './context/AuthContext'
 import CarList from './pages/CarList'
 import ShowCar from './pages/ShowCar'
 import DeleteCar from './pages/DeleteCar'
@@ -11,7 +12,7 @@ import SignUp from './pages/SignUp'
 
 const App = () => {
   return (
-    <div>
+    <AuthProvider>
       <Routes>
         <Route path='/'element={<Home/>}></Route>
         <Route path='/login'element={<Login/>}></Route>
@@ -22,8 +23,7 @@ const App = () => {
         <Route path='/cars/details/:id' element={<ShowCar/>}></Route>
         <Route path='/cars/delete/:id' element={<DeleteCar/> }></Route>
       </Routes>
-      
-    </div>
+    </AuthProvider>
   )
 }
 

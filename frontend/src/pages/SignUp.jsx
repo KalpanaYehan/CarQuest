@@ -7,11 +7,12 @@ const SignUp = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [role, setRole] = useState("user");
   const navigate = useNavigate();
 
   const handleSubmit = (e) => {
      e.preventDefault();
-     axios.post("http://localhost:5555/register", { name, email, password })
+     axios.post("http://localhost:5555/register", { name, email, password,role })
        .then(result => {
          console.log(result);
          navigate('/login');

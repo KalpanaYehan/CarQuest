@@ -1,10 +1,13 @@
-import React from 'react';
+import React,{useContext} from 'react';
 import { Link } from 'react-router-dom';
 import { AiOutlineEdit } from 'react-icons/ai';
 import { BsInfoCircle } from 'react-icons/bs';
 import { MdOutlineDelete } from 'react-icons/md';
+import { AuthContext } from '../../context/AuthContext';
 
 const CarsTable = ({ cars }) => {
+
+  const{user} =useContext(AuthContext)
   return (
     <div className="p-4 bg-white shadow-md rounded-lg">
       <table className="w-full border-separate border-spacing-2">
@@ -19,7 +22,7 @@ const CarsTable = ({ cars }) => {
         </thead>
         <tbody>
           {cars.map((car, index) => (
-            <tr key={car._id} className="h-12 bg-yellow-50 hover:bg-orange-100 transition-colors duration-200">
+            <tr key={car._id} className="h-12 bg-white hover:bg-orange-100 transition-colors duration-200">
               <td className="border border-orange-700 rounded-md text-center p-2">{index + 1}</td>
               <td className="border border-orange-700 rounded-md text-center p-2">{car.model}</td>
               <td className="border border-orange-700 rounded-md text-center p-2 max-md:hidden">{car.brand}</td>
@@ -29,13 +32,17 @@ const CarsTable = ({ cars }) => {
                   <Link to={`/cars/details/${car._id}`} className="text-2xl text-green-800 hover:text-green-600 transition-colors duration-200">
                     <BsInfoCircle />
                   </Link>
-                  <Link to={`/cars/edit/${car._id}`} className="text-2xl text-yellow-700 hover:text-yellow-500 transition-colors duration-200">
-                    <AiOutlineEdit />
-                  </Link>
-                  <Link to={`/cars/delete/${car._id}`} className="text-2xl text-red-600 hover:text-red-400 transition-colors duration-200">
-                    <MdOutlineDelete />
-                  </Link>
-                </div>
+                  {user && user.role === 'admin' && (
+                      <>
+                        <Link to={`/cars/edit/${car._id}`} className="text-2xl text-yellow-700 hover:text-yellow-500 transition-colors duration-200">
+                            <AiOutlineEdit />
+                        </Link>
+                        <Link to={`/cars/delete/${car._id}`} className="text-2xl text-red-600 hover:text-red-400 transition-colors duration-200">
+                            <MdOutlineDelete />
+                        </Link>
+                      </>
+                    )}
+                  </div>
               </td>
             </tr>
           ))}

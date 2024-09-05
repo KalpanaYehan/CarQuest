@@ -1,25 +1,62 @@
-import { useState } from 'react';
+import { useState,useContext } from 'react';
 import React from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
+import { AuthContext } from '../context/AuthContext';
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
+  const{setUser} = useContext(AuthContext)
 
   axios.defaults.withCredentials =true
+
+  
+//   useEffect(() => {
+//     axios.get('http://localhost:5555/auth/check')
+//         .then(response => {
+//             if (response.data.user) {
+//                 setUser(response.data.user);
+//             }
+//         })
+//         .catch(error => {
+//             console.log(error);
+//         });
+// }, []);
+
+  // const handleSubmit = (e) => {
+  //    e.preventDefault();
+  //    axios.post("http://localhost:5555/login", { email, password })
+  //      .then(result => {
+  //        console.log(result);
+  //        if (result.data === 'success') {
+  //          navigate('/cars');
+  //        }
+  //      })
+  //      .catch(err => console.log(err));
+  //  };
+
   const handleSubmit = (e) => {
-     e.preventDefault();
-     axios.post("http://localhost:5555/login", { email, password })
-       .then(result => {
-         console.log(result);
-         if (result.data === 'success') {
-           navigate('/cars');
-         }
-       })
-       .catch(err => console.log(err));
-   };
+    e.preventDefault();
+    axios.post("http://localhost:5555/login", { email, password })
+        .then(result => {
+            if (result.data.message === 'success') {
+                const { token, user } = result.data;
+                
+                // Store the token and update the user context
+                localStorage.setItem('token', token);
+                setUser(user);
+                
+                // Redirect to the cars page
+                navigate('/cars');
+            }else{
+              navigate('/login')
+            }
+        })
+        .catch(err => console.log(err));
+};
+
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
