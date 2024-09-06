@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import Validation from '../Validation';
 
 
 const AdminModal = () => {
@@ -10,29 +11,42 @@ const AdminModal = () => {
         const [email, setEmail] = useState("");
         const [password, setPassword] = useState("");
         const [role, setRole] = useState("admin");
+        const [errors,setErrors] = useState({})
         const navigate = useNavigate();
-      
+
         const handleSubmit = (e) => {
+
            e.preventDefault();
-           axios.post("http://localhost:5555/register", { name, email, password,role })
-             .then(result => {
-               console.log(result);
-               toggleModal()
-             })
-             .catch(err => console.log(err));
-         };
-      
+           const validationErrors = Validation({name,email,password})
+           setErrors(validationErrors)
 
-    const toggleModal = () => {
-        setIsOpen(!isOpen);
-    };
+           if(Object.keys(validationErrors).length === 0){
+            axios.post("http://localhost:5555/register", { name, email, password,role })
+              .then(result => {
+                console.log(result);
+                setName("")
+                setEmail("")
+                setPassword("")
+                setErrors({})
+                toggleModal()
+              })
+              .catch(err => console.log(err));
+            }else{
+              console.log("Validation errors:", validationErrors);
+            }
+          }
 
+        const toggleModal = () => {
+            setIsOpen(!isOpen);
+        };
+
+  
     return (
         <>
             {/* Modal toggle button */}
             <button
                 onClick={toggleModal}
-                className="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+                className="bg-orange-600 hover:bg-orange-100 px-8 py-4 rounded-lg  border-black font-bold"
                 type="button"
             >
                 Add another admin
@@ -89,11 +103,13 @@ const AdminModal = () => {
                       type="text"
                       id="name"
                       name="name"
+                      value={name}
                       placeholder="Enter Name"
                       autoComplete="off"
                       onChange={(e) => setName(e.target.value)}
                       className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500"
                     />
+                    {errors.name && <p className='text-red-600 font-light'>{errors.name}</p>}
                   </div>
                   <div>
                     <label
@@ -106,11 +122,13 @@ const AdminModal = () => {
                       type="text"
                       id="email"
                       name="email"
+                      value={email}
                       placeholder="Enter Email"
                       autoComplete="off"
                       onChange={(e) => setEmail(e.target.value)}
                       className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500"
                     />
+                    {errors.email && <p className='text-red-600 font-light'>{errors.email}</p>}
                   </div>
                   <div>
                     <label
@@ -123,11 +141,13 @@ const AdminModal = () => {
                       type="password"
                       id="password"
                       name="password"
+                      value={password}
                       placeholder="Enter Password"
                       autoComplete="off"
                       onChange={(e) => setPassword(e.target.value)}
                       className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500"
                     />
+                    {errors.password && <p className='text-red-600 font-light'>{errors.password}</p>}
                   </div>
                   <button
                     type="submit"

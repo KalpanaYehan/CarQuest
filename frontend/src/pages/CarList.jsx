@@ -132,16 +132,16 @@ const CarList = () => {
           </div>
 
           <div className='flex justify-center items-center gap-x-4 py-8'>
-            <button className='bg-white hover:bg-orange-100 px-8 py-4 rounded-lg border-2 border-black font-bold' onClick={() => setShowType('table')}>
+            <button className='bg-orange-300 hover:bg-orange-100 px-8 py-4 rounded-lg  font-bold' onClick={() => setShowType('table')}>
                 Table View
             </button>
-            <button className='bg-white hover:bg-orange-100 px-8 py-4 rounded-lg border-2 border-black font-bold' onClick={() => setShowType('card')}>
+            <button className='bg-orange-400 hover:bg-orange-100 px-8 py-4 rounded-lg font-bold' onClick={() => setShowType('card')}>
                 Card View
             </button>
             {user && user.role === 'admin' && (
                   <>
                     <Link to='/cars/create'>
-                        <button className='flex hover:bg-green-600 px-6 py-2 rounded-lg border-2 border-black font-bold bg-green-500' onClick={() => setShowType('card')}>
+                        <button className='bg-orange-500 hover:bg-orange-100 px-8 py-4 rounded-lg font-bold'>
                           Add car
                         </button>
                     </Link>

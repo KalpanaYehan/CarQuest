@@ -2,22 +2,36 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import Validation from '../components/Validation';
 
 const SignUp = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [role, setRole] = useState("user");
+  const [errors,setErrors] = useState({})
   const navigate = useNavigate();
 
   const handleSubmit = (e) => {
      e.preventDefault();
-     axios.post("http://localhost:5555/register", { name, email, password,role })
-       .then(result => {
-         console.log(result);
-         navigate('/login');
-       })
-       .catch(err => console.log(err));
+     const validationErrors = Validation({name,email,password})
+     setErrors(validationErrors)
+
+     if(Object.keys(validationErrors).length === 0){
+      axios.post("http://localhost:5555/register", { name, email, password,role })
+      .then(result => {
+        console.log(result);
+        setName("")
+        setEmail("")
+        setPassword("")
+        setErrors({})
+        navigate('/login');
+      })
+      .catch(err => console.log(err));
+     }else{
+      console.log("Validation errors:", validationErrors);
+     }
+     
    };
 
   return (
@@ -38,6 +52,7 @@ const SignUp = () => {
               onChange={(e) => setName(e.target.value)}
               className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-orange-400"
             />
+            {errors.name && <p className='text-red-600 font-light'>{errors.name}</p>}
           </div>
           <div>
             <label htmlFor="email" className="block text-gray-700 font-semibold mb-1">
@@ -52,6 +67,7 @@ const SignUp = () => {
               onChange={(e) => setEmail(e.target.value)}
               className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-orange-400"
             />
+            {errors.email && <p className='text-red-600 font-light'>{errors.email}</p>}
           </div>
           <div>
             <label htmlFor="password" className="block text-gray-700 font-semibold mb-1">
@@ -66,6 +82,7 @@ const SignUp = () => {
               onChange={(e) => setPassword(e.target.value)}
               className="w-full px-4 py-2 border rounded-md focus:outline-none focus:ring-2 focus:ring-orange-400"
             />
+            {errors.password && <p className='text-red-600 font-light'>{errors.password}</p>}
           </div>
           <button
             type="submit"

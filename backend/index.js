@@ -1,5 +1,4 @@
 import express, { response } from "express";
-import { PORT,mongoDBURL } from "./config.js";
 import mongoose from "mongoose";
 import { Car } from "./models/basicModel.js";
 import carsRout from "./routes/carsRout.js"
@@ -8,79 +7,81 @@ import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 import cookieParser from "cookie-parser";
 import { UserModel } from "./models/userModel.js";
+import dotenv from 'dotenv';
+dotenv.config();
 
 const app = express()
 app.use(express.json());
 app.use(cookieParser()) 
-app.use(cors({origin:"http://localhost:5174",
+app.use(cors({origin:"http://localhost:5173",
     credentials:true,
     methods:["GET","POST","PUT"]}
 
 ))
 
-const renewToken = (req,res)=>{
-    const refreshtoken = req.cookies.refreshtoken
-    let exist = false
-    if(!refreshtoken){
-        res.json({message:"unsuccess"})
+// const renewToken = (req,res)=>{
+//     const refreshtoken = req.cookies.refreshtoken
+//     let exist = false
+//     if(!refreshtoken){
+//         res.json({message:"unsuccess"})
        
-    }else{
-        jwt.verify(refreshtoken,'jwt-security-key',(err,decoded)=>{
-            if(err){ res.json("Token is wrong")
+//     }else{
+//         jwt.verify(refreshtoken,'jwt-security-key',(err,decoded)=>{
+//             if(err){ res.json("Token is wrong")
 
-            }else{
-                const accesstoken = jwt.sign({ email: decoded.email, role: decoded.role }, "jwt-security-key", { expiresIn: '15s' });
-                res.cookie("accesstoken", accesstoken,{maxAge:15000});
-                exist=true
-            }
-        })
-    }
-    return exist
-}
+//             }else{
+//                 const accesstoken = jwt.sign({ email: decoded.email, role: decoded.role }, "jwt-security-key", { expiresIn: '15s' });
+//                 res.cookie("accesstoken", accesstoken,{maxAge:15000});
+//                 exist=true
+//             }
+//         })
+//     }
+//     return exist
+// }
 
-const verifyUser = (req,res,next) =>{ //middleware
-    const accesstoken = req.cookies.accesstoken
-    if(!accesstoken){
-        if(renewToken(req,res)){
-            next()
-        }   
-    }else{
-         jwt.verify(accesstoken,'jwt-security-key',(err,decoded)=>{
-            if(err){ res.json("Token is wrong")
+// const verifyUser = (req,res,next) =>{ //middleware
+//     const accesstoken = req.cookies.accesstoken
+//     if(!accesstoken){
+//         if(renewToken(req,res)){
+//             next()
+//         }   
+//     }else{
+//          jwt.verify(accesstoken,'jwt-security-key',(err,decoded)=>{
+//             if(err){ res.json("Token is wrong")
 
-            }else{
-                req.email = decoded.email
-                req.role = decoded.role
-                next()
-            }
+//             }else{
+//                 req.email = decoded.email
+//                 req.role = decoded.role
+//                 next()
+//             }
            
-        })
-    }
-}
+//         })
+//     }
+// }
 
-const verifyRole = (roles) => (req, res, next) => {
-    const accesstoken = req.cookies.accesstoken
-    if (!accesstoken) {
-        return res.status(401).json("No token provided");
-    }
-    jwt.verify(accesstoken, 'jwt-security-key', (err, decoded) => {
-        if (err) {
-            return res.status(403).json("Token is invalid");
-        }
-        if (!roles.includes(decoded.role)) {
-            return res.status(403).json("Access denied");
-        }
-        next();
-    });
-};
-
-
+// const verifyRole = (roles) => (req, res, next) => {
+//     const accesstoken = req.cookies.accesstoken
+//     if (!accesstoken) {
+//         return res.status(401).json("No token provided");
+//     }
+//     jwt.verify(accesstoken, 'jwt-security-key', (err, decoded) => {
+//         if (err) {
+//             return res.status(403).json("Token is invalid");
+//         }
+//         if (!roles.includes(decoded.role)) {
+//             return res.status(403).json("Access denied");
+//         }
+//         next();
+//     });
+// };
 
 
 app.get("/",(req,res)=>{
     console.log(req)
     return res.status(234).send('Welcome To Book Store')
 })
+
+app.use("/cars",carsRout);//wen request with '/cars' then use this middleware(carsrout)
 
 // Add this route to your existing routes
 // app.get('/auth/check', (req, res) => {
@@ -110,19 +111,19 @@ app.get("/",(req,res)=>{
 
 //,verifyRole(['admin','user'])
 
-app.get('/cars',verifyUser,async(req,res)=>{
-    try{
-        const cars = await Car.find({})
-        return res.status(200).json({ 
-            message:"success",
-            count:cars.length,
-            data:cars
-    })
-    }catch(error){
-        console.log(error.message);
-        res.status(500).send({message:error.message})
-    }
-})
+// app.get('/cars',verifyUser,async(req,res)=>{
+//     try{
+//         const cars = await Car.find({})
+//         return res.status(200).json({ 
+//             message:"success",
+//             count:cars.length,
+//             data:cars
+//     })
+//     }catch(error){
+//         console.log(error.message);
+//         res.status(500).send({message:error.message})
+//     }
+// })
  
 app.post('/register',(req,res)=>{
     const {name,email,password,role} = req.body
@@ -165,8 +166,8 @@ app.post('/login', (req, res) => {
             if (user) {
                 bcrypt.compare(password, user.password, (err, response) => {
                     if (response) {
-                        const accesstoken = jwt.sign({ email: user.email, role: user.role }, "jwt-security-key", { expiresIn: '15s' });
-                        const refreshtoken = jwt.sign({ email: user.email, role: user.role }, "jwt-security-key", { expiresIn: '1m' });
+                        const accesstoken = jwt.sign({ email: user.email, role: user.role }, process.env.accesstoken, { expiresIn: '15s' });
+                        const refreshtoken = jwt.sign({ email: user.email, role: user.role }, process.env.refreshtoken, { expiresIn: '1m' });
                         res.cookie("accesstoken", accesstoken,{maxAge:15000});
                         res.cookie("refreshtoken", refreshtoken,{maxAge:60000,httpOnly:true,secure:true,sameSite:'strict'});
                         
@@ -191,23 +192,21 @@ app.post('/login', (req, res) => {
 
 app.post('/logout', (req, res) => {
     // Clear HttpOnly cookies by setting them to expire in the past
-    
     res.cookie('refreshtoken', '', { expires: new Date(0), httpOnly: true, path: '/' });
-    
     // Send a response indicating successful logout
     res.status(200).json({ message: 'Logged out successfully' });
   });
 
 
-app.use("/cars",carsRout);//wen request with '/books' then use this middleware(booksrout)
+
 
 
 mongoose
-    .connect(mongoDBURL)
+    .connect(process.env.MONGODB)
     .then(()=>{
         console.log('App connected to the database');
-        app.listen(PORT,()=>{
-            console.log(`Listening to port: ${PORT}`);
+        app.listen(process.env.PORT,()=>{
+            console.log(`Listening to port: ${process.env.PORT}`);
         })
     })
     .catch((error)=>{
