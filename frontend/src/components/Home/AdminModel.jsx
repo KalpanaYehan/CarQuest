@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import Validation from '../Validation';
+import { useSnackbar } from 'notistack';
 
 
 const AdminModal = () => {
@@ -13,6 +14,7 @@ const AdminModal = () => {
         const [role, setRole] = useState("admin");
         const [errors,setErrors] = useState({})
         const navigate = useNavigate();
+        const { enqueueSnackbar } = useSnackbar();
 
         const handleSubmit = (e) => {
 
@@ -28,9 +30,13 @@ const AdminModal = () => {
                 setEmail("")
                 setPassword("")
                 setErrors({})
+                enqueueSnackbar('Account Created successfully', { variant: 'success' });
                 toggleModal()
               })
-              .catch(err => console.log(err));
+              .catch(err => {
+                console.log(err)
+              enqueueSnackbar('somthing went wrong', { variant: 'error' })
+              });
             }else{
               console.log("Validation errors:", validationErrors);
             }

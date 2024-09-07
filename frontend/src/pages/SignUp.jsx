@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import Validation from '../components/Validation';
+import { useSnackbar } from 'notistack';
 
 const SignUp = () => {
   const [name, setName] = useState("");
@@ -11,6 +12,7 @@ const SignUp = () => {
   const [role, setRole] = useState("user");
   const [errors,setErrors] = useState({})
   const navigate = useNavigate();
+  const { enqueueSnackbar } = useSnackbar();
 
   const handleSubmit = (e) => {
      e.preventDefault();
@@ -25,9 +27,13 @@ const SignUp = () => {
         setEmail("")
         setPassword("")
         setErrors({})
+        enqueueSnackbar('Account Created successfully', { variant: 'success' });
         navigate('/login');
       })
-      .catch(err => console.log(err));
+      .catch(err => {
+        console.log(err)
+        enqueueSnackbar('somthing went wrong', { variant: 'error' })
+      })
      }else{
       console.log("Validation errors:", validationErrors);
      }
