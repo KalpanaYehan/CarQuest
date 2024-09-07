@@ -178,11 +178,13 @@ app.post('/login', (req, res) => {
                             user: { username: user.name, role: user.role, email: user.email }
                         });
                     } else {
-                        res.status(401).json({ message: "The password is incorrect" });
+                        res.json({ message: "The password is incorrect" });
+                        //.status(401) 
                     }
                 });
             } else {
-                res.status(404).json({ message: "No record existed" });
+                res.json({ message: "No record existed" });
+                // status(404).
             }
         })
         .catch(error => {
@@ -194,7 +196,8 @@ app.post('/logout', (req, res) => {
     // Clear HttpOnly cookies by setting them to expire in the past
     res.cookie('refreshtoken', '', { expires: new Date(0), httpOnly: true, path: '/' });
     // Send a response indicating successful logout
-    res.status(200).json({ message: 'Logged out successfully' });
+    res.json({ message: 'Logged out successfully' });
+    // .status(200)
   });
 
 

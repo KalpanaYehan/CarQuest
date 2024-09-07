@@ -1,9 +1,11 @@
 import axios from 'axios';
 import { FiLogOut } from 'react-icons/fi';
 import { Link, useNavigate } from 'react-router-dom';
+import { useSnackbar } from 'notistack';
 
 const LogoutButton = () => {
     const navigate = useNavigate();
+    const { enqueueSnackbar } = useSnackbar();
     axios.defaults.withCredentials = true
     
     const handleLogout=()=>{
@@ -14,6 +16,8 @@ const LogoutButton = () => {
             .then((res)=>{
                 if(res.data.message ==="Logged out successfully"){
                     document.cookie = 'accesstoken=; expires=Thu, 01 Jan 1970 00:00:00 GMT'
+                    localStorage.removeItem('user')
+                    enqueueSnackbar('successfully logged out', { variant: 'success' });
                     navigate('/');
                 }
             })

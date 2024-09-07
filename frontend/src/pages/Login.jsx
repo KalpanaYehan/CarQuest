@@ -3,12 +3,14 @@ import React from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
 import { AuthContext } from '../context/AuthContext';
+import { useSnackbar } from 'notistack';
 
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const navigate = useNavigate();
   const{setUser} = useContext(AuthContext)
+  const { enqueueSnackbar } = useSnackbar();
 
   axios.defaults.withCredentials =true
 
@@ -42,19 +44,21 @@ const Login = () => {
     axios.post("http://localhost:5555/login", { email, password })
         .then(result => {
             if (result.data.message === 'success') {
-                const { token, user } = result.data;
+                const { accesstoken:token, user } = result.data;
                 
                 // Store the token and update the user context
-                localStorage.setItem('token', token);
+                localStorage.setItem('user', JSON.stringify(user));
                 setUser(user);
-                
+                enqueueSnackbar("logged in successfully", { variant: 'success' })
                 // Redirect to the cars page
                 navigate('/cars');
             }else{
+              const err = result.data.message
+              enqueueSnackbar(err, { variant: 'error' });
               navigate('/login')
             }
         })
-        .catch(err => console.log(err));
+       .catch(err => console.log(err));
 };
 
 
