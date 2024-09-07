@@ -11,6 +11,7 @@ import CarsCard from '../components/Home/CarsCard'
 import { AuthContext } from '../context/AuthContext'
 import AdminModal from '../components/Home/AdminModel'
 import LogoutButton from '../components/LogoutButton'
+import ChatBot from '../components/ChatBot'
 
 const CarList = () => {
 
@@ -158,7 +159,8 @@ const CarList = () => {
             (<CarsCard cars={cars}/>)
             
         
-        }    
+        }  
+        <ChatBot/>  
     </div>
       
    </div>
