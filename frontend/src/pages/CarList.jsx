@@ -34,7 +34,7 @@ const CarList = () => {
     useEffect(()=>{
         setLoading(true)
         axios
-            .get('http://localhost:5555/cars')
+            .get('https://car-quest-ochre.vercel.app/cars')
             .then((response)=>{
                 if(response.data.message !== "success") {
                     navigate('/login');
