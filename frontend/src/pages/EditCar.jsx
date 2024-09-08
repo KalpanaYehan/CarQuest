@@ -55,10 +55,23 @@ const EditCar = () => {
     setLoading(true);
     axios
       .put(`http://localhost:5555/cars/${id}`, data)
-      .then(() => {
-        setLoading(false);
-        enqueueSnackbar('Car edited successfully', { variant: 'success' });
-        navigate('/cars');
+      .then((response) => {
+        if(response.data.message==='successfully updated'){
+          setLoading(false);
+          enqueueSnackbar('successfully updated', { variant: 'success' });
+          navigate('/cars');
+        }else if(response.data.message=== "car not found"){
+          setLoading(false);
+          enqueueSnackbar('car not found', { variant: 'error' });
+          navigate('/cars');
+        }else if(response.data.message=== "send all required field"){
+          setLoading(false);
+          enqueueSnackbar('send all required field', { variant: 'error' })
+        }else{
+          setLoading(false);
+          enqueueSnackbar('unsuccess', { variant: 'error' });
+          navigate('/cars');
+        }
       })
       .catch((error) => {
         setLoading(false);

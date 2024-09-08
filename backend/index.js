@@ -7,6 +7,8 @@ import bcrypt from 'bcrypt'
 import jwt from 'jsonwebtoken'
 import cookieParser from "cookie-parser";
 import { UserModel } from "./models/userModel.js";
+import { verifyLogging } from "./middlewares/verifyLogging.js";
+import { verifyUser } from "./middlewares/verifyUser.js";
 import dotenv from 'dotenv';
 dotenv.config();
 
@@ -15,7 +17,7 @@ app.use(express.json());
 app.use(cookieParser()) 
 app.use(cors({origin:"http://localhost:5173",
     credentials:true,
-    methods:["GET","POST","PUT"]}
+    methods:["GET","POST","PUT","DELETE"]}
 
 ))
 
@@ -81,6 +83,11 @@ app.get("/",(req,res)=>{
     return res.status(234).send('Welcome To Book Store')
 })
 
+// app.get("/auth",verifyUser,(req,res)=>{
+//     return res.send({message:'Welcome To Book Store'})
+// })
+
+
 app.use("/cars",carsRout);//wen request with '/cars' then use this middleware(carsrout)
 
 // Add this route to your existing routes
@@ -125,16 +132,40 @@ app.use("/cars",carsRout);//wen request with '/cars' then use this middleware(ca
 //     }
 // })
  
-app.post('/register',(req,res)=>{
-    const {name,email,password,role} = req.body
-    bcrypt.hash(password,10)
-    .then(hash =>{
-        UserModel.create({name,email,password:hash,role})
-        .then(users => res.json(users))
-        .catch(err => res.json(err))
-    })
-    .catch(err =>console.log(err.message))
-})
+// app.post('/register',(req,res)=>{
+//     const {name,email,password,role} = req.body
+//     bcrypt.hash(password,10)
+//     .then(hash =>{
+//         UserModel.create({name,email,password:hash,role})
+//         .then(users => res.json(users))
+//         .catch(err => res.json(err))
+//     })
+//     .catch(err =>console.log(err.message))
+// })
+
+
+app.post('/register', (req, res) => {
+    const { name, email, password, role } = req.body;
+
+    UserModel.findOne({ email: email })
+        .then(user => {
+            if (user) {
+                // Email already exists
+                return res.json({ message: 'Email already exists' });
+            }
+
+            // If the email doesn't exist, proceed with hashing the password and creating the user
+            bcrypt.hash(password, 10)
+                .then(hash => {
+                    UserModel.create({ name, email, password: hash, role })
+                        .then(res.json({message:'success'}))
+                        .catch(err => res.status(500).json({ message: err.message }));
+                })
+                .catch(err => res.status(500).json({ message: err.message }));
+        })
+        .catch(err => res.status(500).json({ message: err.message }));
+});
+
 
 // app.post('/login',(req,res)=>{
 //     const {email,password} = req.body
@@ -158,7 +189,7 @@ app.post('/register',(req,res)=>{
 //     )
 // })
 
-app.post('/login', (req, res) => {
+app.post('/login',verifyLogging,(req, res) => {
     const { email, password } = req.body;
     
     UserModel.findOne({ email: email })
@@ -166,10 +197,10 @@ app.post('/login', (req, res) => {
             if (user) {
                 bcrypt.compare(password, user.password, (err, response) => {
                     if (response) {
-                        const accesstoken = jwt.sign({ email: user.email, role: user.role }, process.env.accesstoken, { expiresIn: '15s' });
-                        const refreshtoken = jwt.sign({ email: user.email, role: user.role }, process.env.refreshtoken, { expiresIn: '1m' });
-                        res.cookie("accesstoken", accesstoken,{maxAge:15000});
-                        res.cookie("refreshtoken", refreshtoken,{maxAge:60000,httpOnly:true,secure:true,sameSite:'strict'});
+                        const accesstoken = jwt.sign({ email: user.email, role: user.role }, process.env.accesstoken, { expiresIn: '15m' });
+                        const refreshtoken = jwt.sign({ email: user.email, role: user.role }, process.env.refreshtoken, { expiresIn: '1d' });
+                        res.cookie("accesstoken", accesstoken,{maxAge:900000});
+                        res.cookie("refreshtoken", refreshtoken,{maxAge:86400000,httpOnly:true,secure:true,sameSite:'strict'});
                         
                         // Send back the user details along with the token
                         res.status(200).json({

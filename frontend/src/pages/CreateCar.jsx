@@ -32,14 +32,23 @@ const CreateCar = () => {
     setLoading(true);
     axios
       .post('http://localhost:5555/cars', data)
-      .then(() => {
-        setLoading(false);
-        enqueueSnackbar('Car Created successfully', { variant: 'success' });
-        navigate('/cars');
+      .then((res) => {
+        if(res.data.message==='success'){
+          setLoading(false);
+          enqueueSnackbar('Car Created successfully', { variant: 'success' });
+          navigate('/cars');
+        }else if(res.data.message==='unsuccess'){
+          setLoading(false);
+          enqueueSnackbar(res.data.message, { variant: 'error' });
+          navigate('/login');
+        }else{
+          setLoading(false);
+          enqueueSnackbar(res.data.message, { variant: 'error' });
+        }
       })
       .catch((error) => {
         setLoading(false);
-        enqueueSnackbar('Error creating car', { variant: 'error' });
+        enqueueSnackbar(err.message, { variant: 'error' });
         console.log(error);
       });
   };

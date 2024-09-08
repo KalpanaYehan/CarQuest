@@ -12,7 +12,7 @@ export const createCar = async (req, res) => {
             !req.body.description
 
         ){
-            return res.status(400).send({message:'send all required field',})
+            return res.json({message:'send all required field',})
         }
         const newCar ={
             model: req.body.model,
@@ -25,12 +25,12 @@ export const createCar = async (req, res) => {
             description:req.body.description
         }
         const car = await Car.create(newCar)
-        return res.status(210).send(car)
+        return res.json({car:car,message:"success"})
     
     }
     catch(error){
         console.log(error.message);
-        res.status(500).send({message:error.message});
+        res.status(500).json({message:error.message});
 
     }
 }
@@ -69,8 +69,7 @@ export const getCarById = async (req, res) => {
     try{
         const{id} =req.params
         const car = await Car.findById(id)
-        return res.status(200).json(car);
-
+        return res.status(200).json({car:car,message:'success'});
         
     }
     catch(error){
@@ -91,13 +90,13 @@ export const updateCarById = async (req, res) => {
             !req.body.description
 
         ){
-            return res.status(400).send({message:'send all required field',})
+            return res.json({message:'send all required field',})
         }
        
         const{id}=req.params
         const result = await Car.findByIdAndUpdate(id,req.body)
         if(!result){
-            res.status(404).send({message:"Book not found"})
+            res.json({message:"car not found"})
         }
         return res.status(200).send({message:"successfully updated"})
         
@@ -116,7 +115,7 @@ export const deleteCarById = async (req, res) => {
         
 
         if(!result){
-            res.status(404).json({message:"Book not found"})
+            res.json({message:"Book not found"})
         }
         return res.status(200).send({message:'Deleted successfully'})
     }

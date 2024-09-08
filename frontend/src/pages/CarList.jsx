@@ -4,6 +4,7 @@ import Spinner from '../components/Spinner'
 import { Link,useNavigate} from 'react-router-dom'
 import{AiOutlineEdit} from 'react-icons/ai'
 import { BsInfoCircle } from 'react-icons/bs';
+import { FaHome } from 'react-icons/fa';
 import { FiLogOut } from 'react-icons/fi'
 import { MdOutlineAddBox, MdOutlineDelete } from 'react-icons/md';
 import CarsTable from '../components/Home/CarsTable'
@@ -149,6 +150,9 @@ const CarList = () => {
                     <AdminModal/>
                   </>
                 )}
+            <Link to="/">
+              <FaHome className='text-4xl text-white hover:scale-110 transition-colors duration-200' />
+            </Link>
             <LogoutButton/>
         </div>
         </div>

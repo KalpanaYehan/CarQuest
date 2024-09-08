@@ -16,11 +16,22 @@ const DeleteCar = () => {
     setLoading(true);
     axios
       .delete(`http://localhost:5555/cars/${id}`)
-      .then(() => {
-        setLoading(false);
-        enqueueSnackbar('Car Deleted successfully', { variant: 'success' });
-        navigate('/');
-      })
+      .then((res) => {
+          if(res.data.message==='Deleted successfully'){
+            setLoading(false);
+            enqueueSnackbar('Car Deleted successfully', { variant: 'success' });
+            navigate('/cars');
+          }else if(res.data.message=== "Book not found"){
+            setLoading(false);
+            enqueueSnackbar('car not found', { variant: 'error' });
+            navigate('/cars');
+          }else{
+            setLoading(false);
+            enqueueSnackbar('unsuccess', { variant: 'error' });
+            navigate('/cars');
+          }
+        }
+      )
       .catch((error) => {
         console.log(error);
         setLoading(false);

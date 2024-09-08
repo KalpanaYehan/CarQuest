@@ -27,8 +27,11 @@ const SignUp = () => {
         setEmail("")
         setPassword("")
         setErrors({})
-        enqueueSnackbar('Account Created successfully', { variant: 'success' });
-        navigate('/login');
+        if(result.data.message==='success'){
+          enqueueSnackbar('Account Created successfully', { variant: 'success' })
+          navigate('/login')
+        }else if(result.data.message==='Email already exists')
+          enqueueSnackbar('Email already exists', { variant: 'error' })
       })
       .catch(err => {
         console.log(err)

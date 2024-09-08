@@ -1,4 +1,4 @@
-import { useState,useContext } from 'react';
+import { useState,useContext, useEffect } from 'react';
 import React from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import axios from 'axios';
@@ -13,6 +13,26 @@ const Login = () => {
   const { enqueueSnackbar } = useSnackbar();
 
   axios.defaults.withCredentials =true
+
+  useEffect(()=>{
+    axios.post("http://localhost:5555/login", { email, password })
+    .then(result => {
+        if (result.data.message === 'success') {
+          navigate('/cars');
+            // const { accesstoken:token, user } = result.data;
+            // Store the token and update the user context
+            // localStorage.setItem('user', JSON.stringify(user));
+            // setUser(user);
+            // enqueueSnackbar("logged in successfully", { variant: 'success' })
+            // Redirect to the cars page  
+        }else{
+          // const err = result.data.message
+          // enqueueSnackbar(err, { variant: 'error' });
+          // navigate('/login')
+        }
+    })
+   .catch(err => console.log(err));
+  },[])
 
   
 //   useEffect(() => {

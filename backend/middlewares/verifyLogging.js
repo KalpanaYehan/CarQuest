@@ -18,12 +18,12 @@ export const renewToken = (req,res)=>{
     const refreshtoken = req.cookies.refreshtoken
     let exist = false
     if(!refreshtoken){
-        res.json({message:"unsuccess"})
+        // res.json({message:"unsuccess"})
        
     }else{
         jwt.verify(refreshtoken,process.env.refreshtoken,(err,decoded)=>{
-            if(err){ res.json("Token is wrong")
-
+            if(err){ 
+                // res.json("Token is wrong")
             }else{
                 const accesstoken = jwt.sign({ email: decoded.email, role: decoded.role }, process.env.accesstoken, { expiresIn: '15m' });
                 res.cookie("accesstoken", accesstoken,{maxAge:900000});
@@ -34,10 +34,12 @@ export const renewToken = (req,res)=>{
     return exist
 }
 
-export const verifyUser = (req,res,next) =>{ //middleware
+export const verifyLogging = (req,res,next) =>{ //middleware
     const accesstoken = req.cookies.accesstoken
     if(!accesstoken){
         if(renewToken(req,res)){
+            return res.json({message:'success'})
+        }else{
             next()
         }   
     }else{
@@ -45,9 +47,8 @@ export const verifyUser = (req,res,next) =>{ //middleware
             if(err){ res.json("Token is wrong")
 
             }else{
-                req.email = decoded.email
-                req.role = decoded.role
-                next()
+                return res.json({message:'success'})
+                
             }
            
         })

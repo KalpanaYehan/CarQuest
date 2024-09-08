@@ -3,19 +3,29 @@ import axios from 'axios';
 import { useParams } from 'react-router-dom';
 import BackButton from '../components/BackButton';
 import Spinner from '../components/Spinner';
+import { useSnackbar } from 'notistack';
+import { useNavigate } from 'react-router-dom';
 
 const ShowCar = () => {
   const [car, setCar] = useState({});
   const [loading, setLoading] = useState(false);
   const { id } = useParams();
+  const { enqueueSnackbar } = useSnackbar();
+  const navigate = useNavigate();
 
   useEffect(() => {
     setLoading(true);
     axios
       .get(`http://localhost:5555/cars/${id}`)
       .then((response) => {
-        setCar(response.data);
-        setLoading(false);
+        if(response.data.message==='success'){
+          setCar(response.data.car);
+          setLoading(false);
+        }else{
+          setLoading(false);
+          enqueueSnackbar('unsuccess', { variant: 'error' });
+          navigate('/cars');
+        }
       })
       .catch((error) => {
         console.log(error);
