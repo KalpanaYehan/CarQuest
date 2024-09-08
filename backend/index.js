@@ -15,8 +15,10 @@ dotenv.config();
 const app = express()
 app.use(express.json());
 app.use(cookieParser()) 
-app.use(cors({origin:"http://localhost:5173",
+app.use(cors({origin:"https://car-quest-api.vercel.app",
     credentials:true,
+    allowedHeaders: ["Content-Type", "Authorization"],
+    optionsSuccessStatus: 200,
     methods:["GET","POST","PUT","DELETE"]}
 
 ))
