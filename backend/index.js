@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 import { Car } from "./models/basicModel.js";
 import carsRout from "./routes/carsRout.js"
 import cors from 'cors'
-import bcrypt from 'bcrypt'
+import bcrypt from 'bcryptjs'
 import jwt from 'jsonwebtoken'
 import cookieParser from "cookie-parser";
 import { UserModel } from "./models/userModel.js";
