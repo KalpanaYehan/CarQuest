@@ -31,7 +31,7 @@ const CreateCar = () => {
     };
     setLoading(true);
     axios
-      .post('http://localhost:5555/cars', data)
+      .post('https://car-quest-ochre.vercel.app/cars', data)
       .then((res) => {
         if(res.data.message==='success'){
           setLoading(false);

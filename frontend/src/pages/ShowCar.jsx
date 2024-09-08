@@ -16,7 +16,7 @@ const ShowCar = () => {
   useEffect(() => {
     setLoading(true);
     axios
-      .get(`http://localhost:5555/cars/${id}`)
+      .get(`https://car-quest-ochre.vercel.app/${id}`)
       .then((response) => {
         if(response.data.message==='success'){
           setCar(response.data.car);

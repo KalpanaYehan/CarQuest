@@ -15,7 +15,7 @@ const DeleteCar = () => {
   const handleRemoveCar = () => {
     setLoading(true);
     axios
-      .delete(`http://localhost:5555/cars/${id}`)
+      .delete(`https://car-quest-ochre.vercel.app/${id}`)
       .then((res) => {
           if(res.data.message==='Deleted successfully'){
             setLoading(false);

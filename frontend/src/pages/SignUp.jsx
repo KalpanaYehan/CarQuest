@@ -20,7 +20,7 @@ const SignUp = () => {
      setErrors(validationErrors)
 
      if(Object.keys(validationErrors).length === 0){
-      axios.post("http://localhost:5555/register", { name, email, password,role })
+      axios.post("https://car-quest-ochre.vercel.app/register", { name, email, password,role })
       .then(result => {
         console.log(result);
         setName("")

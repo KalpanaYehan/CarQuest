@@ -54,7 +54,7 @@ const EditCar = () => {
     };
     setLoading(true);
     axios
-      .put(`http://localhost:5555/cars/${id}`, data)
+      .put(`https://car-quest-ochre.vercel.app/${id}`, data)
       .then((response) => {
         if(response.data.message==='successfully updated'){
           setLoading(false);
