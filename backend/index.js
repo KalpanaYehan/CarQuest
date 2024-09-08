@@ -202,7 +202,7 @@ app.post('/login',verifyLogging,(req, res) => {
                         const accesstoken = jwt.sign({ email: user.email, role: user.role }, process.env.accesstoken, { expiresIn: '15m' });
                         const refreshtoken = jwt.sign({ email: user.email, role: user.role }, process.env.refreshtoken, { expiresIn: '1d' });
                         res.cookie("accesstoken", accesstoken,{maxAge:900000});
-                        res.cookie("refreshtoken", refreshtoken,{maxAge:86400000,httpOnly:true,secure:true,sameSite:'strict'});
+                        res.cookie("refreshtoken", refreshtoken,{maxAge:86400000,secure: process.env.NODE_ENV === 'production',sameSite:'strict'});
                         
                         // Send back the user details along with the token
                         res.status(200).json({
