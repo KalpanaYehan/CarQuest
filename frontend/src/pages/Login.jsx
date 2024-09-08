@@ -61,7 +61,7 @@ const Login = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    axios.post("http://localhost:5555/login", { email, password })
+    axios.post("https://car-quest-ochre.vercel.app/login", { email, password })
         .then(result => {
             if (result.data.message === 'success') {
                 const { accesstoken:token, user } = result.data;
