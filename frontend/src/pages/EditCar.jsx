@@ -24,14 +24,14 @@ const EditCar = () => {
     axios
       .get(`https://car-quest-ochre.vercel.app/cars/${id}`)
       .then((response) => {
-        setModel(response.data.model);
-        setPublishYear(response.data.publishYear);
-        setBrand(response.data.brand);
-        setPrice(response.data.price);
-        setMileage(response.data.mileage);
-        setImg(response.data.img);
-        setCondition(response.data.condition);
-        setDescription(response.data.description);
+        setModel(response.data.car.model);
+        setPublishYear(response.data.car.publishYear);
+        setBrand(response.data.car.brand);
+        setPrice(response.data.car.price);
+        setMileage(response.data.car.mileage);
+        setImg(response.data.car.img);
+        setCondition(response.data.car.condition);
+        setDescription(response.data.car.description);
         setLoading(false);
       })
       .catch((error) => {
