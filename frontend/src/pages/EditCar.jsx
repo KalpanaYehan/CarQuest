@@ -22,7 +22,7 @@ const EditCar = () => {
   useEffect(() => {
     setLoading(true);
     axios
-      .get(`http://localhost:5555/cars/${id}`)
+      .get(`https://car-quest-ochre.vercel.app/cars/${id}`)
       .then((response) => {
         setModel(response.data.model);
         setPublishYear(response.data.publishYear);
