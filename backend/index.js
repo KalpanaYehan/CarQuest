@@ -227,7 +227,7 @@ app.post('/login',verifyLogging,(req, res) => {
 
 app.post('/logout', (req, res) => {
     // Clear HttpOnly cookies by setting them to expire in the past
-    res.cookie('refreshtoken', '', { expires: new Date(0), httpOnly: true, path: '/' });
+    res.cookie('refreshtoken', '', { expires: new Date(0), httpOnly: true, path: '/' ,sameSite:'none', secure:true});
     // Send a response indicating successful logout
     res.json({ message: 'Logged out successfully' });
     // .status(200)
