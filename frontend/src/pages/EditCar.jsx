@@ -91,7 +91,7 @@ const EditCar = () => {
             <label className='text-lg font-semibold text-gray-700 mb-2'>Model</label>
             <input
               type='text'
-              value={data.model}
+              value={model}
               onChange={(e) => setModel(e.target.value)}
               className='border border-gray-300 rounded-lg px-4 py-2 focus:ring-yellow-500 focus:border-yellow-500'
             />
@@ -100,7 +100,7 @@ const EditCar = () => {
             <label className='text-lg font-semibold text-gray-700 mb-2'>Brand</label>
             <input
               type='text'
-              value={data.brand}
+              value={brand}
               onChange={(e) => setBrand(e.target.value)}
               className='border border-gray-300 rounded-lg px-4 py-2 focus:ring-yellow-500 focus:border-yellow-500'
             />
@@ -109,7 +109,7 @@ const EditCar = () => {
             <label className='text-lg font-semibold text-gray-700 mb-2'>Publish Year</label>
             <input
               type='number'
-              value={data.publishYear}
+              value={publishYear}
               onChange={(e) => setPublishYear(e.target.value)}
               className='border border-gray-300 rounded-lg px-4 py-2 focus:ring-yellow-500 focus:border-yellow-500'
             />
@@ -118,7 +118,7 @@ const EditCar = () => {
             <label className='text-lg font-semibold text-gray-700 mb-2'>Price</label>
             <input
               type='text'
-              value={data.price}
+              value={price}
               onChange={(e) => setPrice(e.target.value)}
               className='border border-gray-300 rounded-lg px-4 py-2 focus:ring-yellow-500 focus:border-yellow-500'
             />
@@ -127,7 +127,7 @@ const EditCar = () => {
             <label className='text-lg font-semibold text-gray-700 mb-2'>Mileage</label>
             <input
               type='text'
-              value={data.mileage}
+              value={mileage}
               onChange={(e) => setMileage(e.target.value)}
               className='border border-gray-300 rounded-lg px-4 py-2 focus:ring-yellow-500 focus:border-yellow-500'
             />
@@ -136,7 +136,7 @@ const EditCar = () => {
             <label className='text-lg font-semibold text-gray-700 mb-2'>Image URL</label>
             <input
               type='text'
-              value={data.img}
+              value={img}
               onChange={(e) => setImg(e.target.value)}
               className='border border-gray-300 rounded-lg px-4 py-2 focus:ring-yellow-500 focus:border-yellow-500'
             />
@@ -145,7 +145,7 @@ const EditCar = () => {
             <label className='text-lg font-semibold text-gray-700 mb-2'>Condition</label>
             <input
               type='text'
-              value={data.condition}
+              value={condition}
               onChange={(e) => setCondition(e.target.value)}
               className='border border-gray-300 rounded-lg px-4 py-2 focus:ring-yellow-500 focus:border-yellow-500'
             />
@@ -153,7 +153,7 @@ const EditCar = () => {
           <div className='flex flex-col'>
             <label className='text-lg font-semibold text-gray-700 mb-2'>Description</label>
             <textarea
-              value={data.description}
+              value={description}
               onChange={(e) => setDescription(e.target.value)}
               className='border border-gray-300 rounded-lg px-4 py-2 h-24 resize-none focus:ring-yellow-500 focus:border-yellow-500'
             />
@@ -161,7 +161,7 @@ const EditCar = () => {
         </div>
         <button
           className='mt-6 w-full p-3 bg-yellow-500 text-white font-bold rounded-lg shadow-md hover:bg-yellow-600 transition-colors duration-300'
-          onClick={data.handleEditCar}
+          onClick={handleEditCar}
         >
           Save
         </button>
